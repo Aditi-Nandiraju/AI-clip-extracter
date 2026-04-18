@@ -218,21 +218,58 @@ function Index() {
         </div>
       </section>
 
-      {/* Progress */}
-      {(busy || progress.stage === "done" || progress.stage === "error") && (
-        <section className="mt-10 border border-border bg-card p-6">
-          <div className="flex items-baseline justify-between">
-            <div className="font-mono text-xs uppercase tracking-widest text-primary">
-              {progress.stage}
-            </div>
-            <div className="font-mono text-xs text-muted-foreground">
-              {Math.round(progress.pct * 100)}%
+      {/* Always-visible Extract CTA + Progress */}
+      <section className="mt-8 border border-border bg-card p-6">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            {busy ? (
+              <span
+                aria-label="loading"
+                className="inline-block h-10 w-10 animate-spin rounded-full border-4 border-secondary border-t-primary"
+              />
+            ) : (
+              <span className="inline-flex h-10 w-10 items-center justify-center bg-primary font-mono text-lg font-bold text-primary-foreground">
+                ▶
+              </span>
+            )}
+            <div>
+              <div className="font-mono text-xs uppercase tracking-widest text-primary">
+                {progress.stage === "idle" ? "ready" : progress.stage}
+              </div>
+              <div className="font-display text-2xl leading-tight">
+                {progress.stage === "idle"
+                  ? file
+                    ? "Ready to extract clips."
+                    : "Drop a video to begin."
+                  : progress.message}
+              </div>
             </div>
           </div>
-          <div className="font-display mt-2 text-2xl">{progress.message}</div>
-          <div className="mt-4 h-1 w-full bg-secondary">
+          <button
+            onClick={start}
+            disabled={!file || busy}
+            className="inline-flex items-center justify-center gap-2 bg-primary px-8 py-4 font-mono text-sm font-bold uppercase tracking-widest text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            {busy ? (
+              <>
+                <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
+                Working…
+              </>
+            ) : (
+              <>Extract Clips →</>
+            )}
+          </button>
+        </div>
+
+        {/* Progress bar — always visible */}
+        <div className="mt-6">
+          <div className="flex items-baseline justify-between font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+            <span>Progress</span>
+            <span>{Math.round(progress.pct * 100)}%</span>
+          </div>
+          <div className="mt-2 h-2 w-full overflow-hidden bg-secondary">
             <div
-              className="h-full bg-primary transition-all"
+              className={`h-full bg-primary transition-all duration-300 ${busy ? "animate-pulse" : ""}`}
               style={{ width: `${Math.max(2, progress.pct * 100)}%` }}
             />
           </div>
@@ -242,13 +279,12 @@ function Index() {
             </div>
           )}
           {busy && (
-            <p className="mt-4 font-mono text-xs text-muted-foreground">
-              First run downloads ~40MB Whisper model + ~30MB ffmpeg core. Cached
-              after that. Keep this tab focused for best speed.
+            <p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+              First run downloads ~40MB Whisper + ~30MB ffmpeg core. Cached after that.
             </p>
           )}
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Results */}
       {result && result.clips.length > 0 && (
