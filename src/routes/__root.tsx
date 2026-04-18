@@ -30,13 +30,17 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { name: "description", content: "Bite-Sized Brilliance automatically transforms long videos into short, engaging clips for social media." },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:description", content: "Bite-Sized Brilliance automatically transforms long videos into short, engaging clips for social media." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Lovable App" },
+      { name: "twitter:description", content: "Bite-Sized Brilliance automatically transforms long videos into short, engaging clips for social media." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5b05e355-c0e9-496e-bf97-264120da16f0/id-preview-4da7fc66--5b9f2e76-622a-4064-8bc4-f7cafe08b693.lovable.app-1776521094578.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5b05e355-c0e9-496e-bf97-264120da16f0/id-preview-4da7fc66--5b9f2e76-622a-4064-8bc4-f7cafe08b693.lovable.app-1776521094578.png" },
     ],
     links: [
       {
@@ -52,11 +56,11 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
-      <body className="grain">
+      <body>
         {children}
         <Scripts />
       </body>
